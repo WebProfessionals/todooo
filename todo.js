@@ -5,7 +5,7 @@ class Task {
     this.id = 1;
     this._text = text || '';
     this.erledigt = false;
-    this._position = 0;
+    this._position = 1;
   }
 
   set position(value) {
@@ -58,15 +58,55 @@ class TodoList {
     this.tasks = [];
   }
 
-  updateTaskText(index, text){
+
+  moveBefore(quellIndex, zielIndex) {
+    let p1 = 0;
+
+    if (zielIndex > 0) {
+      p1 = this.tasks[zielIndex - 1].position;
+    }
+
+    let p2 = this.tasks[zielIndex].position;
+
+    let neuePosition = (p1 + p2) / 2;
+    this.tasks[quellIndex].position = neuePosition;
+
+    this.tasks.sort(((a, b) => a.position - b.position));
+
+  }
+
+  /**
+   * Einen Task aus der Liste als erledigt markieren
+   * @param index
+   */
+  uncheckTask(index) {
+    this.tasks[index].uncheck();
+  }
+
+
+  /**
+   * Einen Task aus der Liste als erledigt markieren
+   * @param index
+   */
+  checkTask(index) {
+    this.tasks[index].check();
+  }
+
+  /**
+   * Aktualisere einen Task
+   * @param index
+   * @param text
+   */
+  updateTaskText(index, text) {
     this.tasks[index].text = text;
   }
+
   /**
    * Löschen eines Tasks
    * @param index
    */
-  removeTask(index){
-    this.tasks.splice(index,1);
+  removeTask(index) {
+    this.tasks.splice(index, 1);
   }
 
   /**

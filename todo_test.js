@@ -8,6 +8,48 @@ describe('Todo', function () {
 
 
   describe('TodoList', function () {
+
+    it('Ein Task sollte nach hinten verschoben werden können', function () {
+      let liste = new TodoList();
+      liste.addTask('Neue Aufgabe');
+      liste.addTask('Neue Aufgabe A');
+      liste.addTask('Neue Aufgabe L');
+      //--- A sollte hier sein
+      liste.addTask('Neue Aufgabe E');
+      liste.addTask('Neue Aufgabe X');
+      liste.addTask('Neue Aufgabe ANDER');
+
+
+      liste.moveBefore(1,3);
+      // wir schieben von 1 auf bevor 3 (=>2)
+      expect(liste.tasks[2].text).equal('Neue Aufgabe A');
+      expect(liste.tasks[2].position).equal(2.5);
+      liste.moveBefore(0,3);
+      expect(liste.tasks[2].text).equal('Neue Aufgabe');
+      expect(liste.tasks[2].position).equal(2.75);
+
+      console.log(liste.tasks)
+    });
+
+
+    it('Ein Task sollte nach vorne verschoben werden können', function () {
+      let liste = new TodoList();
+      liste.addTask('Neue Aufgabe');
+      liste.addTask('Neue Aufgabe A');
+      liste.addTask('Neue Aufgabe L');
+      //--- A sollte hier sein
+      liste.addTask('Neue Aufgabe E');
+      liste.addTask('Neue Aufgabe X');
+      liste.addTask('Neue Aufgabe ANDER');
+
+
+      liste.moveBefore(5,0);
+      // wir schieben von 1 auf bevor 3 (=>2)
+      expect(liste.tasks[0].text).equal('Neue Aufgabe ANDER');
+      expect(liste.tasks[0].position).equal(0.5);
+
+    });
+
     it('Der Text eines Tasks in der Liste sollte aktualisert werden können', function () {
       let liste = new TodoList();
       liste.addTask('Neue Aufgabe');
@@ -21,6 +63,24 @@ describe('Todo', function () {
 
       task.text = "3";
       expect(liste.tasks[2].text).equal("3");
+    });
+
+
+    it('Status eines Tasks aus Liste auf erledigt und unerledigt setzen können', function () {
+      let liste = new TodoList();
+      liste.addTask('Neue Aufgabe');
+      liste.addTask('Neue Aufgabe B');
+      let task = liste.addTask('Neue Aufgabe C');
+
+      liste.checkTask(1);
+      expect(liste.tasks[1].erledigt).equal(true);
+
+      task.check();
+      expect(liste.tasks[2].erledigt).equal(true);
+
+      liste.uncheckTask(1);
+      expect(liste.tasks[1].erledigt).equal(false);
+
     });
 
 
