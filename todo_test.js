@@ -6,7 +6,24 @@ var TodoList = require('./todo.js').TodoList;
 
 describe('Todo', function () {
 
+
   describe('TodoList', function () {
+    it('Der Text eines Tasks in der Liste sollte aktualisert werden können', function () {
+      let liste = new TodoList();
+      liste.addTask('Neue Aufgabe');
+      liste.addTask('Neue Aufgabe B');
+      let task = liste.addTask('Neue Aufgabe C');
+
+      liste.updateTaskText(1,"neuer Text");
+      expect(liste.tasks[1].text).equal("neuer Text");
+      liste.tasks[1].text = "Hi";
+      expect(liste.tasks[1].text).equal("Hi");
+
+      task.text = "3";
+      expect(liste.tasks[2].text).equal("3");
+    });
+
+
     it('Wir sollten einen Task der Liste hinzufügen können', function () {
       let liste = new TodoList();
       liste.addTask('Neue Aufgabe');
@@ -17,10 +34,33 @@ describe('Todo', function () {
       expect(liste.tasks[0].text).equal("Neue Aufgabe");
       expect(liste.tasks[1].text).equal("Neue Aufgabe B");
 
-      expect(liste.tasks[0].position).equal(0);
-      expect(liste.tasks[1].position).equal(1);
     });
 
+    it('Neue Tasks sollten die Position des letzten Tasks +1 haben', function () {
+      let liste = new TodoList();
+
+      liste.addTask('Neue Aufgabe');
+      expect(liste.tasks[0].position).equal(0);
+
+      liste.addTask('Neue Aufgabe B');
+      expect(liste.tasks[1].position).equal(1);
+      liste.tasks[1].position=202;
+      expect(liste.tasks[1].position).equal(202);
+
+      liste.addTask('Neue Aufgabe C');
+      expect(liste.tasks[2].position).equal(203);
+    });
+
+    it('Ein Task soll entfernt werden können', function () {
+      let liste = new TodoList();
+      liste.addTask('Neue Aufgabe A');
+      liste.addTask('Neue Aufgabe B');
+      liste.addTask('Neue Aufgabe C');
+
+      liste.removeTask(1);
+      expect(liste.tasks.length).equal(2);
+      expect(liste.tasks[1].text).equal('Neue Aufgabe C');
+    });
 
   });
 
@@ -79,7 +119,6 @@ describe('Todo', function () {
       let t = new Task;
       t.position = 7.5;
       expect(t.position).equal(7.5);
-
       t.position = "Banane";
       expect(t.position).equal(7.5)
     });
