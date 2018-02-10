@@ -1,3 +1,3 @@
 "use strict"
 
-let t = new Task;
+let t = new Task('Textbeispiel');

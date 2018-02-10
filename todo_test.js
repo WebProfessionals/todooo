@@ -30,5 +30,40 @@ describe('Todo', function () {
       expect(t.position).to.not.equal(undefined);
     });
 
+    it('Sollte einen Task direkt mit Text erzeugen können', function () {
+      let t = new Task("Textbeispiel");
+      expect(t.text).equal("Textbeispiel");
+    });
+
+    it('Sollte einen Task als erledigt markieren können', function () {
+      let t = new Task("Textbeispiel");
+      t.check();
+      expect(t.erledigt).equal(true);
+    });
+
+    it('Sollte einen Task als NICHT erledigt markieren können', function () {
+      let t = new Task("Textbeispiel");
+      t.uncheck();
+      expect(t.erledigt).equal(false);
+      t.check();
+      t.uncheck();
+      expect(t.erledigt).equal(false);
+    });
+
+    it('sollte den Text aktualisieren können', function () {
+      let t = new Task("Textbeispiel");
+      t.text = "**";
+      expect(t.text).equal("**")
+    });
+
+    it('Es sollte eine neue Positionsnummer zugewiesen werden können', function () {
+      let t = new Task;
+      t.position = 7.5;
+      expect(t.position).equal(7.5);
+
+      t.position = "Banane";
+      expect(t.position).equal(7.5)
+    });
+
   });
 });
