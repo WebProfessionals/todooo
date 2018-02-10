@@ -5,6 +5,25 @@ var Task = require('./todo.js').Task;
 var TodoList = require('./todo.js').TodoList;
 
 describe('Todo', function () {
+
+  describe('TodoList', function () {
+    it('Wir sollten einen Task der Liste hinzufügen können', function () {
+      let liste = new TodoList();
+      liste.addTask('Neue Aufgabe');
+      expect(liste.tasks.length).equals(1);
+      liste.addTask('Neue Aufgabe B');
+      expect(liste.tasks.length).equals(2);
+
+      expect(liste.tasks[0].text).equal("Neue Aufgabe");
+      expect(liste.tasks[1].text).equal("Neue Aufgabe B");
+
+      expect(liste.tasks[0].position).equal(0);
+      expect(liste.tasks[1].position).equal(1);
+    });
+
+
+  });
+
   describe('Task', function () {
 
     it('wir sollten ein Task Objekt erzeugen können', function () {

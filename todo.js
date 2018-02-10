@@ -9,7 +9,6 @@ class Task {
   }
 
   set position(value){
-
     if(typeof value == 'number'){
       this._position = value;
     }else{
@@ -58,6 +57,9 @@ class TodoList {
     this.tasks = [];
   }
 
+  addTask(text){
+    this.tasks.push(new Task(text));
+  }
 }
 
 
