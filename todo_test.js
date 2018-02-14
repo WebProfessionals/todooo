@@ -1,8 +1,11 @@
-var assert = require('chai').assert;
-var expect = require('chai').expect;
+// Machen wir nur für die node Tests
+if (typeof module !== 'undefined' && module) {
+   assert = require('chai').assert;
+   expect = require('chai').expect;
 
-var Task = require('./todo.js').Task;
-var TodoList = require('./todo.js').TodoList;
+  Task = require('./todo.js').Task;
+  TodoList = require('./todo.js').TodoList;
+}
 
 describe('Todo', function () {
 
@@ -20,11 +23,11 @@ describe('Todo', function () {
       liste.addTask('Neue Aufgabe ANDER');
 
 
-      liste.moveBefore(1,3);
+      liste.moveBefore(1, 3);
       // wir schieben von 1 auf bevor 3 (=>2)
       expect(liste.tasks[2].text).equal('Neue Aufgabe A');
       expect(liste.tasks[2].position).equal(2.5);
-      liste.moveBefore(0,3);
+      liste.moveBefore(0, 3);
       expect(liste.tasks[2].text).equal('Neue Aufgabe');
       expect(liste.tasks[2].position).equal(2.75);
 
@@ -43,7 +46,7 @@ describe('Todo', function () {
       liste.addTask('Neue Aufgabe ANDER');
 
 
-      liste.moveBefore(5,0);
+      liste.moveBefore(5, 0);
       // wir schieben von 1 auf bevor 3 (=>2)
       expect(liste.tasks[0].text).equal('Neue Aufgabe ANDER');
       expect(liste.tasks[0].position).equal(0.5);
@@ -56,7 +59,7 @@ describe('Todo', function () {
       liste.addTask('Neue Aufgabe B');
       let task = liste.addTask('Neue Aufgabe C');
 
-      liste.updateTaskText(1,"neuer Text");
+      liste.updateTaskText(1, "neuer Text");
       expect(liste.tasks[1].text).equal("neuer Text");
       liste.tasks[1].text = "Hi";
       expect(liste.tasks[1].text).equal("Hi");
@@ -104,7 +107,7 @@ describe('Todo', function () {
 
       liste.addTask('Neue Aufgabe B');
       expect(liste.tasks[1].position).equal(1);
-      liste.tasks[1].position=202;
+      liste.tasks[1].position = 202;
       expect(liste.tasks[1].position).equal(202);
 
       liste.addTask('Neue Aufgabe C');
