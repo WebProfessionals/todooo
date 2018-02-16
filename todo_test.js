@@ -32,7 +32,6 @@ describe('Todo', function () {
       expect(liste.tasks[2].text).equal('Neue Aufgabe');
       expect(liste.tasks[2].position).equal(3.75);
 
-      console.log(liste.tasks)
     });
 
 

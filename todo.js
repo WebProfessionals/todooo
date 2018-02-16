@@ -2,8 +2,9 @@
 
 class Task {
   /**
+   * Ein einzelner Task, per default unerledigt.
    *
-   * @param text
+   * @param text {String} Optionaler Text des Tasks
    */
   constructor(text) {
     this.id = 1;
@@ -13,8 +14,8 @@ class Task {
   }
 
   /**
-   *
-   * @param value {number}
+   * Setze die Priorität (float)
+   * @param value {number} Default ist 1
    */
   set position(value) {
     if (typeof value === 'number') {
@@ -28,21 +29,24 @@ class Task {
   }
 
   /**
-   *
+   * Gibt die Priorität / Position aus
    * @returns {number}
    */
   get position() {
     return this._position;
   }
 
-
+  /**
+   * Text des Tasks
+   * @returns {String}
+   */
   get text() {
     return this._text;
   }
 
   /**
    * Aktualisere den Text
-   * @param v
+   * @param v {String}
    */
   set text(v) {
     this._text = v;
@@ -70,7 +74,11 @@ class TodoList {
     this.tasks = [];
   }
 
-
+  /**
+   * Verschiebt einen Task vor einen anderen Task
+   * @param quellIndex
+   * @param zielIndex
+   */
   moveBefore(quellIndex, zielIndex) {
     let p1 = 0;
 
