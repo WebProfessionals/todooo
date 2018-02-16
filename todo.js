@@ -1,6 +1,10 @@
 "use strict"
 
 class Task {
+  /**
+   *
+   * @param text
+   */
   constructor(text) {
     this.id = 1;
     this._text = text || '';
@@ -8,8 +12,12 @@ class Task {
     this._position = 1;
   }
 
+  /**
+   *
+   * @param value {number}
+   */
   set position(value) {
-    if (typeof value == 'number') {
+    if (typeof value === 'number') {
       this._position = value;
       this.id = value;
     } else {
@@ -19,6 +27,10 @@ class Task {
 
   }
 
+  /**
+   *
+   * @returns {number}
+   */
   get position() {
     return this._position;
   }
