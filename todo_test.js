@@ -26,10 +26,11 @@ describe('Todo', function () {
       liste.moveBefore(1, 3);
       // wir schieben von 1 auf bevor 3 (=>2)
       expect(liste.tasks[2].text).equal('Neue Aufgabe A');
-      expect(liste.tasks[2].position).equal(2.5);
+      expect(liste.tasks[2].position).equal(3.5);
+
       liste.moveBefore(0, 3);
       expect(liste.tasks[2].text).equal('Neue Aufgabe');
-      expect(liste.tasks[2].position).equal(2.75);
+      expect(liste.tasks[2].position).equal(3.75);
 
       console.log(liste.tasks)
     });
