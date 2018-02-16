@@ -103,10 +103,10 @@ describe('Todo', function () {
       let liste = new TodoList();
 
       liste.addTask('Neue Aufgabe');
-      expect(liste.tasks[0].position).equal(0);
+      expect(liste.tasks[0].position).equal(1);
 
       liste.addTask('Neue Aufgabe B');
-      expect(liste.tasks[1].position).equal(1);
+      expect(liste.tasks[1].position).equal(2);
       liste.tasks[1].position = 202;
       expect(liste.tasks[1].position).equal(202);
 
