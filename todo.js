@@ -130,6 +130,17 @@ class TodoList {
   }
 
   /**
+   * Entfernt einen Task mit seiner ID
+   * @param taskID
+   */
+  removeTaskByID(taskID){
+    let f = (task)=>{
+      return task.id === taskID;
+    };
+    let index = this.tasks.findIndex(f);
+    this.removeTask(index);
+  }
+  /**
    * Füge einen Task hinzu
    * @param text Text des Tasks
    */

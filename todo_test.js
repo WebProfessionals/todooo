@@ -18,9 +18,11 @@ describe('Todo', function () {
       liste.addTask('Neue Aufgabe'); // id 1
       liste.addTask('Neue Aufgabe B'); // id 2
       liste.addTask('Neue Aufgabe C'); // id 3
+      liste.addTask('Neue Aufgabe D'); // id 4
 
       liste.removeTaskByID(2);
-      expect(liste.tasks[1].id).equal(2);
+      expect(liste.tasks[1].id).equal(3);
+      expect(liste.tasks.length).equal(3);
 
     });
 
