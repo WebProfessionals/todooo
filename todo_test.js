@@ -20,6 +20,10 @@ describe('Todo', function () {
       liste.addTask('Neue Aufgabe C'); // id 3
       liste.addTask('Neue Aufgabe D'); // id 4
 
+      // nicht existierender index sollte keine Auswirkung haben
+      liste.removeTaskByID(9);
+      expect(liste.tasks[1].id).equal(2);
+
       liste.removeTaskByID(2);
       expect(liste.tasks[1].id).equal(3);
       expect(liste.tasks.length).equal(3);

@@ -126,7 +126,10 @@ class TodoList {
    * @param index
    */
   removeTask(index) {
-    this.tasks.splice(index, 1);
+    if(index > -1){
+      this.tasks.splice(index, 1);
+    }
+
   }
 
   /**
