@@ -12,6 +12,18 @@ describe('Todo', function () {
 
   describe('TodoList', function () {
 
+
+    it('ein Task sollte auch mit seiner ID entfernt werden können', function () {
+      let liste = new TodoList();
+      liste.addTask('Neue Aufgabe'); // id 1
+      liste.addTask('Neue Aufgabe B'); // id 2
+      liste.addTask('Neue Aufgabe C'); // id 3
+
+      liste.removeTaskByID(2);
+      expect(liste.tasks[1].id).equal(2);
+
+    });
+
     it('Ein Task sollte nach hinten verschoben werden können', function () {
       let liste = new TodoList();
       liste.addTask('Neue Aufgabe');
