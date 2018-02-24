@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 class Task {
   /**
@@ -11,6 +11,7 @@ class Task {
     this._text = text || '';
     this.erledigt = false;
     this._position = 1;
+
   }
 
   /**
@@ -19,8 +20,9 @@ class Task {
    */
   set position(value) {
     if (typeof value === 'number') {
+      TodoList.onUpdateTask(this);
       this._position = value;
-      this.id = value;
+     // this.id = value;
     } else {
       console.warn('Es wurde ein nicht numerischer Typ der Position zugewiesen');
       //TODO: Abklären ob wir einen Fehler werfen können.
@@ -49,6 +51,7 @@ class Task {
    * @param v {String}
    */
   set text(v) {
+    TodoList.onUpdateTask(this);
     this._text = v;
   }
 
@@ -56,6 +59,7 @@ class Task {
    * Markiert einen Task als erledigt
    */
   check() {
+    TodoList.onUpdateTask(this);
     this.erledigt = true;
     return true;
   }
@@ -64,6 +68,7 @@ class Task {
    * Markiert einen Task als unerledigt
    */
   uncheck() {
+    TodoList.onUpdateTask(this);
     this.erledigt = false;
     return true;
   }
@@ -72,6 +77,9 @@ class Task {
 class TodoList {
   constructor() {
     this.tasks = [];
+    this._maxID = 1;
+
+    this.onInit(this);
   }
 
   /**
@@ -126,7 +134,8 @@ class TodoList {
    * @param index
    */
   removeTask(index) {
-    if(index > -1){
+    if (index > -1) {
+      this.onDeleteTask(this.tasks[index]);
       this.tasks.splice(index, 1);
     }
 
@@ -136,27 +145,72 @@ class TodoList {
    * Entfernt einen Task mit seiner ID
    * @param taskID
    */
-  removeTaskByID(taskID){
-    let f = (task)=>{
+  removeTaskByID(taskID) {
+    let finder = (task) => {
       return task.id === taskID;
     };
-    let index = this.tasks.findIndex(f);
+
+    let index = this.tasks.findIndex(finder);
     this.removeTask(index);
   }
+
   /**
    * Füge einen Task hinzu
    * @param text Text des Tasks
    */
   addTask(text) {
+
     let neuerTask = new Task(text);
 
     if (this.tasks.length > 0) {
       let letzePosition = this.tasks[this.tasks.length - 1].position;
       neuerTask.position = ++letzePosition;
+      neuerTask.id = ++this._maxID;
     }
 
-    this.tasks.push(neuerTask);
-    return neuerTask;
+    let exterErstellterTask = this.onNewTask(neuerTask);
+
+    if ( exterErstellterTask != false) {
+      this.tasks.push(exterErstellterTask);
+      return exterErstellterTask;
+    }
+    return false;
+
+  }
+
+
+  /**
+   * Event / Callback der beim Anlegen eines neuen Tasks ausgeführt wird.
+   *
+   * @param task
+   * @returns {boolean} True wenn alles geklappt hat, False bei Fehlern
+   */
+  onNewTask(task) {
+
+    return task;
+  }
+
+  // beim init aufgerufener callback
+  onInit(){
+    return true
+  }
+
+  /**
+   * Callback beim löschen eines Tasks
+   * @param task
+   * @returns {boolean}
+   */
+  onDeleteTask(task){
+    return true;
+  }
+
+  /**
+   *
+   * @param task
+   * @returns {boolean}
+   */
+  static onUpdateTask(task) {
+    return true;
   }
 }
 

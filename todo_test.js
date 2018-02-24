@@ -1,7 +1,7 @@
 // Machen wir nur für die node Tests
 if (typeof module !== 'undefined' && module) {
-   assert = require('chai').assert;
-   expect = require('chai').expect;
+  assert = require('chai').assert;
+  expect = require('chai').expect;
 
   Task = require('./todo.js').Task;
   TodoList = require('./todo.js').TodoList;
@@ -12,10 +12,76 @@ describe('Todo', function () {
 
   describe('TodoList', function () {
 
+    it('Sollte beim Löschen eines Task onDeleteTask aufrufen ', function () {
+      let liste = new TodoList();
+      let t = liste.addTask('Neue Aufgabe');
+      let check = 0;
+
+      liste.onDeleteTask = task => {
+        check = 1;
+
+        return true;
+      };
+      liste.removeTask(0);
+      expect(liste.tasks.length).equal(0);
+      expect(check).equal(1);
+    });
+
+    it('sollte beim aktualisieren eines Tasks den onUpdateTask vom Test aufrufen', function () {
+
+      let check = 0;
+      TodoList.onUpdateTask = task => {
+        check++;
+        return true;
+      };
+
+      let liste = new TodoList();
+      let t = liste.addTask('Neue Aufgabe');
+      t.text = 'xx';
+      expect(check).equal(1);
+
+      t.check();
+      expect(check).equal(2);
+
+      t.uncheck();
+      expect(check).equal(3);
+
+
+      t.position = 4;
+      expect(check).equal(4);
+
+    });
+
+    it('beim Erstellen eines Tasks bei dem onNewTask fehlerhaft war, task nicht in die Liste aufnehmen', function () {
+      let liste = new TodoList();
+
+      liste.onNewTask = (task) => {
+        expect(task.text).equal('Neue Aufgabe');
+        return false;
+      };
+
+      liste.addTask('Neue Aufgabe');
+      expect(liste.tasks.length).equal(0);
+    });
+
+    it('beim Erstellen eines Tasks sollte onNewTask callback aufgerufen werden', function () {
+      let liste = new TodoList();
+
+      liste.onNewTask = (task) => {
+        let neuerTask = new Task(task.text);
+        neuerTask.id = 99999;
+        return neuerTask;
+      };
+
+      liste.addTask('Neue Aufgabe');
+      expect(liste.tasks[0].text).equal('Neue Aufgabe');
+      expect(liste.tasks[0].id).equal(99999);
+      expect(liste.tasks.length).equal(1);
+    });
 
     it('ein Task sollte auch mit seiner ID entfernt werden können', function () {
       let liste = new TodoList();
-      liste.addTask('Neue Aufgabe'); // id 1
+      liste.addTask('Neue Aufgabe A'); // id 1
       liste.addTask('Neue Aufgabe B'); // id 2
       liste.addTask('Neue Aufgabe C'); // id 3
       liste.addTask('Neue Aufgabe D'); // id 4
@@ -25,7 +91,7 @@ describe('Todo', function () {
       expect(liste.tasks[1].id).equal(2);
 
       liste.removeTaskByID(2);
-      expect(liste.tasks[1].id).equal(3);
+      expect(liste.tasks[1].position).equal(3);
       expect(liste.tasks.length).equal(3);
 
     });
