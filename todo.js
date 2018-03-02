@@ -20,9 +20,8 @@ class Task {
    */
   set position(value) {
     if (typeof value === 'number') {
-      TodoList.onUpdateTask(this);
       this._position = value;
-     // this.id = value;
+      TodoList.onUpdatePosition(this);
     } else {
       console.warn('Es wurde ein nicht numerischer Typ der Position zugewiesen');
       //TODO: Abklären ob wir einen Fehler werfen können.
@@ -51,7 +50,7 @@ class Task {
    * @param v {String}
    */
   set text(v) {
-    TodoList.onUpdateTask(this);
+
     this._text = v;
     TodoList.onUpdateTask(this);
   }
@@ -60,7 +59,7 @@ class Task {
    * Markiert einen Task als erledigt
    * */
   check() {
-    TodoList.onUpdateTask(this);
+
     this.erledigt = true;
     TodoList.onUpdateTask(this);
     return true;
@@ -70,7 +69,7 @@ class Task {
      * Markiert einen Task als unerledigt
    */
   uncheck() {
-    TodoList.onUpdateTask(this);
+
     this.erledigt = false;
     TodoList.onUpdateTask(this);
     return true;
@@ -81,7 +80,6 @@ class TodoList {
   constructor() {
     this.tasks = [];
     this._maxID = 1;
-
     this.onInit(this);
   }
 
@@ -213,6 +211,15 @@ class TodoList {
    * @returns {boolean}
    */
   static onUpdateTask(task) {
+    return true;
+  }
+
+  /**
+   * Callback der aufgerufen wird wenn die Position eines Tasks geändert wurde
+   * @param task
+   * @returns {boolean}
+   */
+  static onUpdatePosition(task) {
     return true;
   }
 }
