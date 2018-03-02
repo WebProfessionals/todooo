@@ -53,23 +53,26 @@ class Task {
   set text(v) {
     TodoList.onUpdateTask(this);
     this._text = v;
+    TodoList.onUpdateTask(this);
   }
 
   /**
    * Markiert einen Task als erledigt
-   */
+   * */
   check() {
     TodoList.onUpdateTask(this);
     this.erledigt = true;
+    TodoList.onUpdateTask(this);
     return true;
   }
 
   /**
-   * Markiert einen Task als unerledigt
+     * Markiert einen Task als unerledigt
    */
   uncheck() {
     TodoList.onUpdateTask(this);
     this.erledigt = false;
+    TodoList.onUpdateTask(this);
     return true;
   }
 }
